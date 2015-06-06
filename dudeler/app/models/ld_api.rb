@@ -26,7 +26,7 @@ class LdApi
   def self.app_destroy_all_data
     response = get("http://api.globalhack4.test.lockerdome.com/app_fetch_user_content?%7B%22app_id%22:%22#{OPTIONS[:id]}%22,%22app_secret%22:%22#{OPTIONS[:secret]}%22,%22created_by%22:%227740187291418625%22%7D")#
     response["result"].keys.each do |key|
-
+      get("http://api.globalhack4.test.lockerdome.com/app_destroy_content?%7B%22app_id%22:%22#{OPTIONS[:id]}%22,%22app_secret%22:%22#{OPTIONS[:secret]}%22,%22content_id%22:%22#{key}%22%7D")#
     end
   end
   

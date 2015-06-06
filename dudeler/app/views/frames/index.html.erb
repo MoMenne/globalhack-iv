@@ -1,11 +1,5 @@
 <div class="widget-cntnr locker-widget">
-  <% unless @image.nil? %>
-    <div class="title heading">
-      <!--<a class="name" href=""><%= @image.name %></a>-->
-      <h2><%= @image.name %></h2>
+  <div class="title heading">
+      <%= render "images/sketch_pad", image: @image %>
     </div>
-    <%= image_tag @image.image_file_url if @image.image_file? %>
-  <% else %>
-    <h5>No Image Found</h5>
-  <% end %>
 </div>
