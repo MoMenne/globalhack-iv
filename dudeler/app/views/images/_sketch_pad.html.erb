@@ -1,0 +1,13 @@
+
+<% unless image.nil? %>
+  <canvas id="simple_sketch" width="800" height="3000" style="background: url(<%= @image.image_file_url %>)"></canvas>
+
+  <script type="text/javascript">
+    $(function() {
+      $('#simple_sketch').sketch();
+    });
+  </script>
+
+<% else %>
+  <h5>No Image Found</h5>
+<% end %>

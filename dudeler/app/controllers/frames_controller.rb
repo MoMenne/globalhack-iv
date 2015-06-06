@@ -3,7 +3,6 @@ class FramesController < ApplicationController
 
   def index
     content_id = parse_content_id(request)
-    binding.pry
     @image = Image.find_by_content_id(content_id)
   end
 
