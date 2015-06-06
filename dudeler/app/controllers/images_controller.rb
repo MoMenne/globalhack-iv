@@ -27,7 +27,7 @@ class ImagesController < ApplicationController
 
   private
   def image_params
-    params.require(:image).permit(:name, :image_file)
+    params.require(:image).permit(:name, :image_file, :text)
   end
   def allow_iframe_requests
     response.headers.delete('X-Frame-Options')

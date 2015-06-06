@@ -1,2 +1,11 @@
-<%= @image = Image.all.first %>
-<%= image_tag @image.image_file_url if @image.image_file? %>
+<div class="widget-cntnr locker-widget">
+  <% unless @image.nil? %>
+    <div class="title heading">
+      <!--<a class="name" href=""><%= @image.name %></a>-->
+      <h2><%= @image.name %></h2>
+    </div>
+    <%= image_tag @image.image_file_url if @image.image_file? %>
+  <% else %>
+    <h5>No Image Found</h5>
+  <% end %>
+</div>

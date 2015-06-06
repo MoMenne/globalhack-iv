@@ -15,7 +15,9 @@ ActiveRecord::Schema.define(version: 20150606072658) do
 
   create_table "images", force: :cascade do |t|
     t.string   "name"
+    t.string   "text"
     t.string   "image_file"
+    t.string   "content_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
