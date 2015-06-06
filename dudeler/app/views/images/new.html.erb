@@ -1,0 +1,6 @@
+<%= semantic_form_for @image, url: images_path(@image), html: { multipart: true } do |f| %>
+
+  <%= f.input :name %>
+  <%= f.input :image_file, :multipart => true, :as => :file, :label => 'Image' %>
+  <%= f.submit 'Upload it!' %>
+<% end %>

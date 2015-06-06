@@ -1,0 +1,8 @@
+
+<h1>Dudeler</h1>
+
+<ul>
+  <% @images.each do |image| %>
+    <li><%= link_to image.name, image_path(image) %></li>
+  <% end %>
+</ul>
