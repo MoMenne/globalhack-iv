@@ -1,0 +1,2 @@
+<%= @image = Image.all.first %>
+<%= image_tag @image.image_file_url if @image.image_file? %>
