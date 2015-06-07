@@ -11,15 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150606072658) do
+ActiveRecord::Schema.define(version: 20150607091718) do
+
+  create_table "difference_points", force: :cascade do |t|
+    t.integer  "x"
+    t.integer  "y"
+    t.integer  "photo_hunt_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "images", force: :cascade do |t|
     t.string   "name"
     t.string   "text"
     t.string   "image_file"
     t.string   "content_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "photo_hunt_id"
+  end
+
+  create_table "photo_hunts", force: :cascade do |t|
+    t.integer  "base_image_id"
+    t.integer  "diff_image_id"
+    t.string   "name"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end

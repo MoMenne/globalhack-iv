@@ -1,6 +1,7 @@
 class Image < ActiveRecord::Base
   after_create :post_to_lockerdome
 
+  belongs_to :photo_hunt
   mount_uploader :image_file, ImageUploader
 
   def post_to_lockerdome
