@@ -43,7 +43,7 @@
         //}
         //for(i=0; i < circles.length; i++) {
           context.beginPath();
-          context.arc(event.clientX - this.offsetLeft - radi, event.clientY - this.offsetTop - radi, radi, 0,  2*Math.PI, false);
+          context.arc(event.clientX - this.offsetLeft, event.clientY - this.offsetTop, radi, 0,  2*Math.PI, false);
           context.lineWidth = 2;
           context.strokeStyle = 'white';
           context.stroke(); 
