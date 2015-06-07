@@ -9,21 +9,34 @@
       
     </div>
   </div>
+<div id="text_layer" style="position: absolute; top: 0; left: 0; width:100%; height:100%; z-index: 10; background-color: rgba(0,0,0,0.5); display: none">
+  <h4 style="margin-left: auto; margin-right: auto; width: 80%; text-align: center, color: white; text-size: 300%; font-weight: bold; color: white;">... seconds</h4>
+</div>
 </div>
   <script type="text/javascript">
     $(function() {
       var canvas = $('#simple_sketch_2')[0]
       var context = canvas.getContext('2d');
       var circles = [];
+      var total_time = 0;
+      var timer;
       //kids dont ever ever do this
       //var points = [{x: 100, y: 100}, {x:200, y:200}, {x:101,y:101},{x:101,y:102}];
       var points = <%= photo_hunt.output_points %>
       var radi = 15;
-      //$('#simple_sketch_2').sketch();
+      $("#simple_sketch_1").css({ opacity: 0.94 })
+      $("#simple_sketch_2").css({ opacity: 0.94 }).hover(function() {
+        $(this).animate({ opacity: 1 });
+      }, function() {
+        $(this).animate({ opacity: 0.94 });
+      });
       canvas.addEventListener('click', handle_click, false);
 
       function handle_click(event) {
         console.log('x ' + event.clientX + ' y ' + event.clientY );
+        //if (first_click) {
+          timer = setInterval(function () { total_time = total_time + 1}, 1000);
+        //}
         //context = canvas.getContext('2d');
         if (matchesPoints(event.clientX - this.offsetLeft, event.clientY - this.offsetTop, points, radi)) {
           circles.push({clientX: event.clientX, clientY: event.clientY})
@@ -38,6 +51,9 @@
         }
         if(points.length === 0) {
           console.log('~~~~~~~~~~~~~~~~~~~~~~Winner!~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+          window.clearTimeout(timer)
+          $("#both_canvases").css({ opacity: 0.1 })
+          $("#both_canvases").append("<h4>13.4 seconds</h4>");
         }
       }
 

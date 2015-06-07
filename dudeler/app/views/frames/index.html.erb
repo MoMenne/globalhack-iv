@@ -1,5 +1,13 @@
 <div class="widget-cntnr locker-widget">
   <div class="title heading">
-      <%= render "photo_hunts/sketch_pad_photo_hunt", photo_hunt: @photo_hunt %>
-    </div>
+    <h3>
+      <%= @photo_hunt.name %>
+    </h3>
+    <h4>
+      Find the syntax errors
+    </h4>
+  </div>
+  <div>
+    <%= render "photo_hunts/sketch_pad_photo_hunt", photo_hunt: @photo_hunt %>
+  </div>
 </div>
