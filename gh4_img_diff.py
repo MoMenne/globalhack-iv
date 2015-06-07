@@ -33,7 +33,8 @@ def get_diffs( file_img1, file_img2, min_pts ):
     d = {'diff':[]}
     for c in cont:
         if len(c) > min_pts:
-            d['diff'].append([[int(n) for n in p[0]] for p in c ])
+            momnt = cv2.moments(c)
+            d['diff'].append([momnt['m10']/momnt['m00'],momnt['m01']/momnt['m00']])
 
     # dump JSON to stdout
     json.dump(d,sys.stdout)
