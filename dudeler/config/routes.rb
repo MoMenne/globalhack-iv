@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'frames#index'
   resources :images
+  resources :photo_hunts do
+    post 'update_difference_points', to: 'photo_hunts#update_difference_points'
+    resources :difference_points
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,0 +1,80 @@
+
+
+<% unless photo_hunt.nil? %>
+  <div style="display: inline">
+    <canvas id="simple_sketch_1" width="177" height="500" style="background: url(<%= photo_hunt.base_image.image_file_url %>); background-repeat: no-repeat"></canvas>
+    <canvas id="simple_sketch_2" width="177" height="500" style="background: url(<%= photo_hunt.diff_image.image_file_url %>); background-repeat: no-repeat"></canvas>
+    <div class="std-bttn wht-bttn edit-bio no-resize-bttn" id="update-points">Update Points</div>
+  </div>
+
+  <script type="text/javascript">
+    $(function() {
+      var canvas = $('#simple_sketch_2')[0]
+      var context = canvas.getContext('2d');
+      var circles = [];
+      var radi = 15;
+      canvas.addEventListener('click', handle_click, false);
+
+      function handle_click(event) {
+        console.log('x ' + event.clientX + ' y ' + event.clientY );
+        //context = canvas.getContext('2d');
+        if (matchesPoints(event.clientX - this.offsetLeft, event.clientY - this.offsetTop, circles, radi)) {
+          circles.push({x: event.clientX - this.offsetLeft, y: event.clientY - this.offsetTop})
+        }
+        context.clearRect(0, 0, 100000, 100000);
+        for(var i=0; i < circles.length; i++) {
+          context.beginPath();
+          context.arc(circles[i].x, circles[i].y, radi, 0,  2*Math.PI, false);
+          context.lineWidth = 2;
+          context.strokeStyle = 'white';
+          context.stroke(); 
+          context.closePath();
+        }
+        
+      }
+
+      function distance(x1,y1,x2,y2){
+        return Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2));
+      }
+
+      function matchesPoints(x, y, circles, radi) {
+
+        for(i=0; i<circles.length; i++) {
+          if( distance(circles[i].x, circles[i].y, x, y) < radi * 2 ){
+            circles.splice(i, i + 1);
+            return false;
+          }
+        }
+        return true; 
+      } 
+
+      window.parent.postMessage(JSON.stringify({
+        name: 'request_width',
+        args: [400]
+      }), '*');
+      window.parent.postMessage(JSON.stringify({
+        name: 'request_height', 
+        args: [400]
+      }), '*');
+
+      $('#update-points').click(function() {
+        console.log('yeah update those points');
+        //points = [{x: 100, y: 100}, {x: 50, y: 50}]
+        points = circles
+        $.ajax({
+          url: "/photo_hunts/<%= photo_hunt.id %>/update_difference_points",
+          dataType: 'json',
+          type: 'POST',
+          data: { photo_hunt: {difference_points: points }},
+          success: function(resp){
+            console.log('Updated points');
+            window.location.replace("http://globalhack4.test.lockerdome.com/7740569476399169/" + resp.content_id);
+          }
+        });
+      });
+    });
+  </script>
+
+<% else %>
+  <h5>No Image Found</h5>
+<% end %>

@@ -1,0 +1,72 @@
+
+
+<% unless photo_hunt.nil? %>
+<div id="both_canvases">
+  <div style="display: inline">
+    <canvas id="simple_sketch_1" width="177" height="500" style="background: url(<%= photo_hunt.base_image.image_file_url %>); background-repeat: no-repeat"></canvas>
+    <canvas id="simple_sketch_2" width="177" height="500" style="background: url(<%= photo_hunt.diff_image.image_file_url %>); background-repeat: no-repeat"></canvas>
+    <div>
+      
+    </div>
+  </div>
+</div>
+  <script type="text/javascript">
+    $(function() {
+      var canvas = $('#simple_sketch_2')[0]
+      var context = canvas.getContext('2d');
+      var circles = [];
+      //kids dont ever ever do this
+      //var points = [{x: 100, y: 100}, {x:200, y:200}, {x:101,y:101},{x:101,y:102}];
+      var points = <%= photo_hunt.output_points %>
+      var radi = 15;
+      //$('#simple_sketch_2').sketch();
+      canvas.addEventListener('click', handle_click, false);
+
+      function handle_click(event) {
+        console.log('x ' + event.clientX + ' y ' + event.clientY );
+        //context = canvas.getContext('2d');
+        if (matchesPoints(event.clientX - this.offsetLeft, event.clientY - this.offsetTop, points, radi)) {
+          circles.push({clientX: event.clientX, clientY: event.clientY})
+        //}
+        //for(i=0; i < circles.length; i++) {
+          context.beginPath();
+          context.arc(event.clientX - this.offsetLeft - radi, event.clientY - this.offsetTop - radi, radi, 0,  2*Math.PI, false);
+          context.lineWidth = 2;
+          context.strokeStyle = 'white';
+          context.stroke(); 
+          context.closePath();
+        }
+        if(points.length === 0) {
+          console.log('~~~~~~~~~~~~~~~~~~~~~~Winner!~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        }
+      }
+
+      function distance(x1,y1,x2,y2){
+        return Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2));
+      }
+
+      function matchesPoints(x, y, points, radi) {
+
+        for(i=0; i<points.length; i++) {
+          if( distance(points[i].x, points[i].y, x, y) < radi ){
+            points.splice(i, i + 1);
+            return true;
+          }
+        }
+        return false; 
+      } 
+
+      window.parent.postMessage(JSON.stringify({
+        name: 'request_width',
+        args: [400]
+      }), '*');
+      window.parent.postMessage(JSON.stringify({
+        name: 'request_height', 
+        args: [600]
+      }), '*');
+    });
+  </script>
+
+<% else %>
+  <h5>No Image Found</h5>
+<% end %>

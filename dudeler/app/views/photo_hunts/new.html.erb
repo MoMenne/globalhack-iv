@@ -1,0 +1,13 @@
+<%= semantic_form_for @photo_hunt, url: photo_hunts_path(@photo_hunt), html: { multipart: true } do |f| %>
+
+  <%= f.input :name %>
+  <% @base_image ||= BaseImage.new %>
+  <%= semantic_fields_for @base_image do |b| %>
+    <%= b.input :image_file, :multipart => true, :as => :file, :label => 'Base Image', :hint => image_tag(b.object.image_file.url) %>
+  <% end %>
+  <% @diff_image ||= DiffImage.new %>
+  <%= semantic_fields_for @diff_image do |d| %>
+    <%= d.input :image_file, :multipart => true, :as => :file, :label => 'Diff Image' %>
+  <% end %>
+  <%= f.submit 'Upload it!' %>
+<% end %>

@@ -4,6 +4,7 @@ class FramesController < ApplicationController
   def index
     content_id = parse_content_id(request)
     @image = Image.find_by_content_id(content_id)
+    @photo_hunt = PhotoHunt.find_by_content_id(content_id)
   end
 
   private

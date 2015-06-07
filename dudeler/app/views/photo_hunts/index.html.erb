@@ -1,0 +1,10 @@
+
+
+<h1>Dudeler</h1>
+
+<ul>
+  <% @photo_hunts.each do |photo_hunt| %>
+    <li><%= link_to photo_hunt.name, photo_hunt_path(photo_hunt) %></li>
+  <% end %>
+</ul>
+<%= button_to "New", { action: "new" }, method: :get,  form_class: "std-bttn wht-bttn edit-bio no-resize-bttn"  %>

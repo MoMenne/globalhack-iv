@@ -13,6 +13,16 @@
 
 ActiveRecord::Schema.define(version: 20150607091718) do
 
+  create_table "base_images", force: :cascade do |t|
+    t.string  "image_file"
+    t.integer "photo_hunt_id"
+  end
+
+  create_table "diff_images", force: :cascade do |t|
+    t.string  "image_file"
+    t.integer "photo_hunt_id"
+  end
+
   create_table "difference_points", force: :cascade do |t|
     t.integer  "x"
     t.integer  "y"
@@ -32,11 +42,10 @@ ActiveRecord::Schema.define(version: 20150607091718) do
   end
 
   create_table "photo_hunts", force: :cascade do |t|
-    t.integer  "base_image_id"
-    t.integer  "diff_image_id"
     t.string   "name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "content_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
